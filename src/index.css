@@ -11,3 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.subC1 {
+  width: 400px;
+  height: 400px;
+  border: 2px solid black;
+}
+
+.subC2 {
+  width: 400px;
+  height: 400px;
+  border: 2px solid black;
+}
+
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.red {
+  background-color: red;
+}

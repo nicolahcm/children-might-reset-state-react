@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+Lesson learnt:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+1) We remind that a component has 3 life cycles:
+A) Mounted: 
+A.1) constructor executed. // sets the state. useState is being executed and initial states set.
+A.2) rendered.           // executed its code 
+A.3) Component did mount.  // mounted in the real dom.
 
-In the project directory, you can run:
+B) Updated:
+B.1) rendered. // executed its code.
+B.2) component did update.
 
-### `npm start`
+C) willunmount.
+C.1) Will unmount.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+2) Child components either are mounted or updated.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When a parent updates one of his state or props, it is rerendered (UPDATED, which is different from mounting phase.). 
+Thus reexecutes its code in return. But be careful, even if there are some children, the children don't necessarily get mounted again!
+They go to the update phase sometimes, so the state is kept. In our example here it wasn't the case, for how the children is being in the return of the function.
 
-### `npm run build`
+HP1) Probably, if we pass some NEW Different props down to the children, then it remounts with A <-- To Test> 
+// No. Tested, not always. I didn't use the props passed in the children. Perhaps if you do use it it might be.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+HP2) Confirmed. If there is a conditional rendering as in here which depends on the state of the component, then it remounts with A.
+HP3) Confirmed. If there is no props passed down, and the children is always the same (see the other folder), if just goes to the phase B. It only updates. Be careful when happens A or B to the children component!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+3) When we wanted a different result, we could lift up the state! So that the state is not reinitializated in the children component!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+SUMMARY: THE ONLY THINGS TO REMEMBER:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+PROBLEM: A CHILDREN MIGHT RESET THE STATE (useState is being reexecuted).  ...
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If we don't want this...
+Solution: BE AWARE OF THIS PROBLEM and test things out. If it is not as expected, move the state up!
